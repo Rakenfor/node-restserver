@@ -10,10 +10,6 @@ const app = express();
 //Peticiones
 app.get('/user', verificaToken, (req, res) => {
 
-    return res.json({
-        user: req.user
-    })
-
     let skip = req.query.skip || 0;
     skip = Number(skip);
 
