@@ -7,7 +7,7 @@ const { verificaToken, verificaAdminRole } = require('../middlewares/authenticat
 
 const app = express();
 
-//Peticiones
+//Obtener la lista de usuarios
 app.get('/user', verificaToken, (req, res) => {
 
     let skip = req.query.skip || 0;
@@ -40,6 +40,7 @@ app.get('/user', verificaToken, (req, res) => {
 
 });
 
+//Crear un usuario
 app.post('/user', [verificaToken, verificaAdminRole], (req, res) => {
 
 
@@ -55,10 +56,17 @@ app.post('/user', [verificaToken, verificaAdminRole], (req, res) => {
     user.save((err, userDB) => {
 
         if (err) {
-            return res.status(400).json({
+            return res.status(500).json({
                 ok: false,
                 err
-            });
+            })
+        }
+
+        if (!categoryDB) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
         }
 
         // userDB.password = null
@@ -72,6 +80,7 @@ app.post('/user', [verificaToken, verificaAdminRole], (req, res) => {
 
 });
 
+//Actualizar un usuario
 app.put('/user/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'state']);
@@ -94,6 +103,7 @@ app.put('/user/:id', [verificaToken, verificaAdminRole], (req, res) => {
 
 });
 
+//Borrar o cambiar de estado un usuario 
 app.delete('/user/:id', [verificaToken, verificaAdminRole], (req, res) => {
 
     let id = req.params.id;

@@ -27,6 +27,7 @@ mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology:
         console.log('Base de datos ONLINE');
     })
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 app.listen(process.env.PORT, () => {
     console.log('Escuchando en el puerto: ', process.env.PORT)
