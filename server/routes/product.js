@@ -143,6 +143,7 @@ app.delete('/products/:id', (req, res) => {
 
 });
 
+//Actualizar un producto
 app.put('/products/:id', (req, res) => {
 
     let id = req.params.id;
